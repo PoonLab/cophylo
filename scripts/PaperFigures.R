@@ -64,116 +64,9 @@ for (i in 1:nmetric) {
 #file saved in pdf as cophylo/data/edgecases.pdf, modified in Adobe Illustrator as cophylo/data/edgecases-ai.pdf and redited in GIMP Image Editor as cophylo/data/edgecases-ai_modified.png
 # =================
 #Figure 3
-require(kernlab)
-require(Kaphi)
-require(phangorn)
-require(RColorBrewer)
+require('corrplot')
 
-# edge cases
-setwd('~/work/coevolution/data/hepadna')
-
-# (1) L=10E-6, M=0, varying P
-align <- read.csv('Align/0000001_0_x/Results.csv', header=T)
-kf <- read.csv('KF/0000001_0_x/Results.csv', header=T)
-mast <- read.csv('MAST/0000001_0_x/Results.csv', header=T)
-node <- read.csv('Node/0000001_0_x/Results.csv', header=T)
-nph85 <- read.csv('nPH85/0000001_0_x/Results.csv', header=T)
-rf <- read.csv('RF/0000001_0_x/Results.csv', header=T)
-sim <- read.csv('Sim/0000001_0_x/Results.csv', header=T)
-trip <- read.csv('Trip/0000001_0_x/Results.csv', header=T)
-tripL <- read.csv('TripL/0000001_0_x/Results.csv', header=T)
-wRF <- read.csv('wRF/0000001_0_x/Results.csv', header=T)
-kU <- read.csv('Justshape/')
-
-# (2) L=10E-6, varying M, P=0
-
-# (3) L=1, varying M, P=1
-
-# (4) varying L, M=0, P=0  (if P=1, no lineages to coalesce)
-
-
-
-# read Newick tree strings from files
-filenames <- paste('~/work/coevolution/data/', 1:18, ".nwk", sep='')
-trees <- lapply(filenames, read.tree)
-
-
-
-# art@Rei:/home/marianoavino/Desktop/Coalescent/Coevolution/Sequences$ for f in `find . -name Tree`; do echo $f; cat $f; done > /home/art/Desktop/trees.txt
-# replaced "Tree\\r" with "\t"
-trees <- read.table('trees.txt', header=F)
-names(trees) <- c('source', 'taxon', 'newick')
-trees$is.host <- rep(c(TRUE, FALSE), times=9)
-
-trees <- data.frame(
-  source=trees$source[seq(1,nrow(trees),2)],
-  host.tree=trees$newick[seq(1,nrow(trees),2)],
-  path.tree=trees$newick[seq(2,nrow(trees),2)]
-)
-trees$cospeciation <- c('hi', 'lo', 'hi', 'lo', 'hi', 'hi', 'hi', 'hi', 'lo')
-
-x <- lapply(as.character(trees$host.tree), 
-            function(x) ladderize(read.tree(text=x)))
-y <- lapply(as.character(trees$path.tree), 
-            function(x) ladderize(read.tree(text=x)))
-
-
-
-
-trees$RF.dist <- sapply(1:length(x), function(i) 
-  RF.dist(x[[i]], y[[i]], check.labels=F, normalize=T))
-trees$wRF.dist <- sapply(1:length(x), function(i) 
-  wRF.dist(x[[i]], y[[i]], check.labels=F, normalize=T))
-
-trees$kernel <- sapply(1:length(x), function(i) {
-  t1 <- x[[i]]
-  t1$edge.length <- t1$edge.length / mean(t1$edge.length)
-  t2 <- y[[i]]
-  t2$edge.length <- t2$edge.length / mean(t2$edge.length)
-  
-  denom <- sqrt(tree.kernel(t1, t1, lambda=0.2, sigma=10) *
-                  tree.kernel(t2, t2, lambda=0.2, sigma=10))
-  res <- tree.kernel(t1, t2, lambda=0.2, sigma=10)
-  res/denom
-})
-
-par(mfrow=c(1,1))
-set.seed(2)
-plot(trees$RF.dist, jitter(rep(1, times=nrow(trees)), 5), ylim=c(0,5), 
-     cex=1.5, pch=21, bg=ifelse(trees$cospeciation=='hi', 'firebrick3', 'skyblue'))
-points(trees$wRF.dist, jitter(rep(2, times=nrow(trees)), 5), 
-       cex=1.5, pch=21, bg=ifelse(trees$cospeciation=='hi', 'firebrick3', 'skyblue'))
-points(trees$kernel, jitter(rep(3, times=nrow(trees)), 5), 
-       cex=1.5, pch=21, bg=ifelse(trees$cospeciation=='hi', 'firebrick3', 'skyblue'))
-
-
-
-# load kernel matrix (parameters?)
-output <- read.csv('output.csv', header=F, row.names=1)
-km <- as.kernelMatrix(as.matrix(output))
-
-kp <- kpca(km)
-ke <- eig(kp) / sum(eig(kp))
-
-require(RColorBrewer)
-pal <- brewer.pal(9, 'Set1')
-par(mfrow=c(1,1), mar=c(5,5,1,1))
-plot(rotated(kp)[,1:2], bg=rep(pal, each=2), pch=21, cex=2, 
-     xlab=paste('Principal component 1 (', round(100*ke[1]), '%)', sep=''),
-     ylab=paste('Principal component 2 (', round(100*ke[2]), '%)', sep=''),
-     cex.lab=1.5)
-text(rotated(kp)[,1:2], labels=1:19)
-
-plot(rotated(kp)[,3:4], bg=rep(pal, each=2), pch=21, cex=2)
-text(rotated(kp)[,3:4], labels=1:19)
-
-res <- tsne(1-as.matrix(output))
-plot(res, bg=rep(pal, each=2), pch=21, cex=2)
-text(res, labels=1:18)
-
-
-
-avg <- read.table('~/work/coevolution/data/average.csv', sep='\t', header=T)
+avg <- read.table('cophylo/data/average.csv', sep='\t', header=T)
 avg$kUn <- 1-avg$kUn
 avg$kU <- 1-avg$kU
 avg$kLn <- 1-avg$kLn
@@ -187,18 +80,9 @@ corr <- cor(avg[,4:ncol(avg)], method='spearman')
 adjm <- corr>0.95
 require(igraph)
 g <- graph_from_adjacency_matrix(adjm)
-
 pdf(file='corrplot.pdf', width=5.5, height=5.2)
 par(mar=c(5,5,2,2))
 corrplot(corr, type='lower', diag=F, method='ellipse', order='FPC', cl.pos='n', tl.col='black')
-dev.off()
-
-hc <- hclust(dist(corr))
-plot(hc)
-abline(h=0.5)
-
-final <- read.table('~/papers/coevol/Final.csv', sep='\t',  header=T)
-
 
 #Figure 4 
 
