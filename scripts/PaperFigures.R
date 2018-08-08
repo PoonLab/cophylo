@@ -227,7 +227,7 @@ contour(z, add=T, labcex=0.8, vfont=NULL)
 setwd('cophylo')
 
 # gives the percentile for 18 pairs in the General data collection
-total <- read.csv('cophylo/TotalandKernel.txt', header=T, row.names=1)
+total <- read.csv('data/TotalandKernel.txt', header=T, row.names=1)
 
 # exclude "norm" suffix columns
 total <- total[ , !grepl("norm$", names(total))]
@@ -258,8 +258,8 @@ require(ape)
 require(phangorn)
 
 total$RF <- sapply(c(seq(1,12,2), seq(15,38,2)), function(i) {
-  t1 <- read.tree(paste('cophylo/data/', i, '.nwk', sep=''))
-  t2 <- read.tree(paste('cophylo/data/', i+1, '.nwk', sep=''))
+  t1 <- read.tree(paste('data/', i, '.nwk', sep=''))
+  t2 <- read.tree(paste('data/', i+1, '.nwk', sep=''))
   RF.dist(t1, t2, normalize=T, rooted=T, check.labels=F)
 })
 
@@ -275,17 +275,6 @@ total$kLn <- 1-total$kLn
 
 z <- rep(concordance=='hi', times=ncol(total))
 
-par(mar=c(6,5,1,1))
-plot(x=jitter(rep(1:ncol(total), each=nrow(total))), 
-     y=unlist(total), 
-     bg=ifelse(z, 'salmon', 'dodgerblue'),
-     pch=ifelse(z, 21, 4), xaxt='n', xlab='',
-     ylab='Normalized distance', cex.lab=1.5)
-axis(side=1, at=1:ncol(total), label=colnames(total), las=2)
-
-for (i in seq(2, 13, 2)) {
-  rect(i-.5, -0.2, i+.5, 1.2, border=NA, col=rgb(0,0,1,0.1))
-}
 
 fit <- glm((concordance=='hi') ~ kUn+kLn+kU+kL+Sim+Node+nPH85, 
            data=as.data.frame(total), family='binomial')
@@ -319,7 +308,7 @@ print(g)
 setwd('cophylo')
 
 # gives the percentile for 18 pairs in the General data collection
-total <- read.csv('cophylo/TotalandKernel.txt', header=T, row.names=1)
+total <- read.csv('data/TotalandKernel.txt', header=T, row.names=1)
 
 # exclude "norm" suffix columns
 total <- total[ , !grepl("norm$", names(total))]
@@ -381,9 +370,8 @@ for (i in seq(2, 13, 2)) {
 
 
 #Figure S2
-R
 library('kernlab')
-setwd('/home/marianoavino/Desktop/Coevolution/kUgeneral')
+setwd('cophylo/data/')
 m <- read.csv('kUgeneral.csv', header=F, row.names=1)
 m1 <- as.matrix(m[,4:39])
 km <- as.kernelMatrix(as.matrix(m1))
@@ -412,8 +400,8 @@ text(rotated(kp), label=row.names(m), cex=0.6, pos=1, offset=0.3)
 legend("bottomright",legend=c('Host','Pathogen'), pch=c(16,17), pt.cex=2,cex=1,bty='n')
 
 #Figure s3
-setwd('/home/marianoavino/Desktop/Coevolution/Mammals-virus/PruningApproach/decayFactor0.2gaussFactor2Midpointtree')
-library("kernlab", lib.loc="~/R/x86_64-pc-linux-gnu-library/3.2")
+setwd('cophylo/data/')
+library('kernlab')
 par(mfrow=c(1,2))
 m <- read.csv('PruningOutgroupmidpointtree.csv', header=F, row.names=1)
 m1 <- as.matrix(m[,4:41])
