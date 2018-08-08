@@ -1,7 +1,7 @@
 #Figure 1 (see file edgecase-trees.pdf)
 # =================
 #Figure 2 (see file edgecases-ai_modified.png)
-setwd('~/work/coevolution/data')
+setwd('~/cophylo/data')
 df <- read.table("oldaverageforRscaledL.csv", header=T, sep=',')
 
 nmetric <- nlevels(df$Metric)
@@ -62,7 +62,6 @@ for (i in 1:nmetric) {
   text(x=metric$P, y=metric$Distance, label=m, cex=0.6, col=colors[i])
 }
 
-dev.off()
 
 #Figure 3
 require(kernlab)
