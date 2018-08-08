@@ -86,13 +86,7 @@ corrplot(corr, type='lower', diag=F, method='ellipse', order='FPC', cl.pos='n', 
 
 #Figure 4 
 
-setwd('~/papers/coevol')
-final <- read.csv('Final.csv', sep='\t', header=T)
-
-#fit <- glm(kUn ~ log(L) + log(M) + P + log(L):log(M) + log(L):P +
-             log(M):P, data=final)
-
-#cor.test(final$P, final$kUn)
+final <- read.csv('cophylo/data/Final.csv', sep='\t', header=T)
 
 require(entropy)
 
