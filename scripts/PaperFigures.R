@@ -62,19 +62,12 @@ for (i in 1:nmetric) {
   text(x=metric$P, y=metric$Distance, label=m, cex=0.6, col=colors[i])
 }
 #file saved in pdf as cophylo/data/edgecases.pdf, modified in Adobe Illustrator as cophylo/data/edgecases-ai.pdf and redited in GIMP Image Editor as cophylo/data/edgecases-ai_modified.png
-
+# =================
 #Figure 3
 require(kernlab)
 require(Kaphi)
 require(phangorn)
 require(RColorBrewer)
-
-res <- read.csv('~/work/coevolution/data/hepadna/Sim/x_0_0/Results.csv')
-x <- c(0.000001,0.00001,0.0001,0.001,0.01,0.025,0.04,0.07,0.13,0.25,0.5,0.75,0.9,1)
-y <- apply(res, 2, mean)
-plot(x, y, log='x')
-
-boxplot(res, at=log10(x))
 
 # edge cases
 setwd('~/work/coevolution/data/hepadna')
