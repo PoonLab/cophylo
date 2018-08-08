@@ -151,7 +151,7 @@ barplot(rbind(mi$P, mi$P2), beside=T, col=pal[5:6], ylim=c(0, 0.8),
         names.arg=mi$metric, las=2, ylab='Mutual information')
 text(x=2, y=0.8, label='P', cex=2)
 
-#Figure 5 and 6
+#Figure 5
 
 # make some contour plots
 
@@ -159,7 +159,7 @@ norm <- function(x) {
   (x-min(x)) / (max(x)-min(x))
 }
 
-avg <- read.csv('~/papers/coevol/average.csv', sep='\t', header=T)
+avg <- read.csv('cophylo/data/average.csv', sep='\t', header=T)
 
 
 par(mar=c(5,5,1,1), mfrow=c(1,2))
@@ -184,7 +184,14 @@ title('RF', adj=0)
 contour(z, add=T, labcex=0.8, vfont=NULL)
 axis(side=1, at=seq(0,1,0.2), labels=round(seq(-6.9, -0.6, length.out=6),1))
 
+#Figure 6
+# make some contour plots
 
+norm <- function(x) {
+  (x-min(x)) / (max(x)-min(x))
+}
+
+avg <- read.csv('cophylo/data/average.csv', sep='\t', header=T)
 
 # contour plot of Sim on M and L
 par(mfrow=c(1,2), mar=c(5,5,1,1))
