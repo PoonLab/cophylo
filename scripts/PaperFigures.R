@@ -61,7 +61,7 @@ for (i in 1:nmetric) {
   points(metric$P, metric$Distance, col='white', cex=2, pch=20)
   text(x=metric$P, y=metric$Distance, label=m, cex=0.6, col=colors[i])
 }
-
+#file saved in pdf as cophylo/data/edgecases.pdf, modified in Adobe Illustrator as cophylo/data/edgecases-ai.pdf and redited in GIMP Image Editor as cophylo/data/edgecases-ai_modified.png
 
 #Figure 3
 require(kernlab)
