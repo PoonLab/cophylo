@@ -1,5 +1,5 @@
 #Figure 1 (see file edgecase-trees.pdf)
-# =================
+# made in DensiTree v2.2.5 and Adobe Illustrator, uploaded in cophylo/data
 #Figure 2 (see file edgecases-ai_modified.png)
 setwd('cophylo/data')
 df <- read.table("oldaverageforRscaledL.csv", header=T, sep=',')
@@ -62,7 +62,7 @@ for (i in 1:nmetric) {
   text(x=metric$P, y=metric$Distance, label=m, cex=0.6, col=colors[i])
 }
 #file saved in pdf as cophylo/data/edgecases.pdf, modified in Adobe Illustrator as cophylo/data/edgecases-ai.pdf and redited in GIMP Image Editor as cophylo/data/edgecases-ai_modified.png
-# =================
+
 #Figure 3
 require('corrplot')
 
