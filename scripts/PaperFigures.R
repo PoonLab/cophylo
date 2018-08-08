@@ -1,14 +1,6 @@
 #Figure 1 (see file edgecase-trees.pdf)
-
-#Figure 2 (see file edgecases-ai_modified.png)
-require(kernlab)
-require(Kaphi)
-require(phangorn)
-require(RColorBrewer)
 # =================
-pdf(file='~/papers/coevol/edgecases.pdf', height=4.5, width=13.5)
-
-
+#Figure 2 (see file edgecases-ai_modified.png)
 setwd('~/work/coevolution/data')
 df <- read.table("oldaverageforRscaledL.csv", header=T, sep=',')
 
@@ -73,6 +65,11 @@ for (i in 1:nmetric) {
 dev.off()
 
 #Figure 3
+require(kernlab)
+require(Kaphi)
+require(phangorn)
+require(RColorBrewer)
+
 res <- read.csv('~/work/coevolution/data/hepadna/Sim/x_0_0/Results.csv')
 x <- c(0.000001,0.00001,0.0001,0.001,0.01,0.025,0.04,0.07,0.13,0.25,0.5,0.75,0.9,1)
 y <- apply(res, 2, mean)
