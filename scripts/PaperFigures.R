@@ -13,7 +13,7 @@ yrange <- range(df$Distance)
 par(mar=c(5,5,1,0), mfrow=c(1,3), cex=1)
 
 plot(xrange, yrange, type="n", 
-     xlab="Coalescence rate (lineage pair/Mya)", ylab="Scaled distance", 
+     xlab="Coalescence rate (lineage pair/Ma)", ylab="Scaled distance", 
      log='x', cex.lab=1.2, cex.axis=1.1)
 colors <- rainbow(nmetric, v=0.8)
 for (i in 1:nmetric) {
@@ -32,7 +32,7 @@ df$Distance[grepl("^k", df$Metric)] <- 1 - df$Distance[grepl("^k", df$Metric)]
 df <- df[df$M>0,]
 par(mar=c(5,1,1,1))
 plot(range(df$M), range(df$Distance), type="n", 
-     xlab="Migration rate (/lineage/Mya)", ylab="", 
+     xlab="Migration rate (lineage/Ma)", ylab="", 
      log='x', cex.lab=1.2, cex.axis=1.1, yaxt='n')
 colors <- rainbow(nmetric, v=0.8)
 for (i in 1:nmetric) {
