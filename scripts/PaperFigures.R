@@ -212,7 +212,7 @@ contour(z, add=T, labcex=0.8, vfont=NULL)
 
 # same plot with normalized unlabeled kernel
 lo <- loess(kUn ~ log10(M) + log10(L), data=avg)
-z <- predict(lo, newdata=gr)
+z <- predict(lo, newdata=gr)
 plot(norm(log10(avg$M)), norm(log10(avg$L)), 
      cex=2*sqrt(norm(avg$kUn))+0.25,
      bg=rgb(norm(avg$kUn), 0, 1-norm(avg$kUn), alpha=0.5),
@@ -458,3 +458,61 @@ arrows(1.15223058,1.28233822,0.08839839,1.44269162,length=0)
 arrows(-1.53326548,1.34124147,-1.53326548,1.34124147,length=0)
 legend("bottomleft",legend=c('Host','Virus'), pch=c(16,17), pt.cex=2,cex=1,bty='n')
 
+#Figure s4
+df <- read.table("oldaveragecoeffvarL.csv", header=T, sep=',',na.strings = "NA")
+nmetric <- nlevels(df$Metric)
+
+
+xrange <- range(df$L)
+yrange <- range(df$Distance,na.rm = TRUE)
+
+par(mar=c(5,5,1,0), mfrow=c(1,3), cex=1)
+
+plot(xrange, yrange, type="n", 
+     xlab="Coalescence rate (lineage pair/Ma)", ylab="Coeffcient of variance", 
+     log='x', cex.lab=0.70, cex.axis=1.1)
+colors <- rainbow(nmetric, v=0.8)
+for (i in 1:nmetric) {
+    m <- levels(df$Metric)[i]
+    metric <- subset(df, Metric==m)
+    lines(metric$L, metric$Distance, type="l", lwd=1.5,
+          col=colors[i])
+    points(metric$L, metric$Distance, col='white', cex=2, pch=20)
+    text(x=metric$L, y=metric$Distance, label=m, cex=0.6, col=colors[i])
+}
+
+df <- read.table("oldaveragecoeffvarM.csv", header=T, sep=',',na.strings = "NA")
+nmetric <- nlevels(df$Metric)
+
+# omit M=0
+df <- df[df$M>0,]
+par(mar=c(5,1,1,1))
+plot(range(df$M), range(df$Distance,na.rm = TRUE), type="n", 
+     xlab="Migration rate (lineage/Ma)", ylab="", 
+     log='x', cex.lab=0.70, cex.axis=1.1, yaxt='n')
+colors <- rainbow(nmetric, v=0.8)
+for (i in 1:nmetric) {
+    m <- levels(df$Metric)[i]
+    metric <- subset(df, Metric==m)
+    lines(metric$M, metric$Distance, type="l", lwd=1.5,
+          col=colors[i])
+    points(metric$M, metric$Distance, col='white', cex=2, pch=20)
+    text(x=metric$M, y=metric$Distance, label=m, cex=0.6, col=colors[i])
+}
+
+df <- read.table("oldaveragecoeffvarP.csv", header=T, sep=',',na.strings = "NA")
+nmetric <- nlevels(df$Metric)
+
+
+plot(range(df$P), range(df$Distance,na.rm = TRUE), type="n", 
+     xlab="Cospeciation probability", ylab="Coeffcient of variance", 
+     cex.lab=0.70, cex.axis=1.1)
+colors <- rainbow(nmetric, v=0.8)
+for (i in 1:nmetric) {
+    m <- levels(df$Metric)[i]
+    metric <- subset(df, Metric==m)
+    lines(metric$P, metric$Distance, type="l", lwd=1.5,
+          col=colors[i])
+    points(metric$P, metric$Distance, col='white', cex=2, pch=20)
+    text(x=metric$P, y=metric$Distance, label=m, cex=0.6, col=colors[i])
+}
