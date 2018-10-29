@@ -86,7 +86,7 @@ corrplot(corr, type='lower', diag=F, method='ellipse', order='FPC', cl.pos='n', 
 
 #Figure 4 
 
-final <- read.csv('cophylo/data/Final.csv', sep='\t', header=T)
+final <- read.csv('cophylo/data/Final.csv', sep=',', header=T)
 
 require(entropy)
 
