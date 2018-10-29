@@ -309,10 +309,10 @@ print(g)
 setwd('cophylo')
 
 # gives the percentile for 18 pairs in the General data collection
-total <- read.csv('data/TotalandKernel.txt', header=T, row.names=1)
+total <- read.csv('data/TotalandKernelS1.txt', header=T, row.names=1)
 
 # exclude "norm" suffix columns
-total <- total[ , !grepl("norm$", names(total))]
+#total <- total[ , !grepl("norm$", names(total))]
 
 concordance <- as.factor(c(
   'hi',  # 1-2 
@@ -357,7 +357,7 @@ total$kLn <- 1-total$kLn
 
 z <- rep(concordance=='hi', times=ncol(total))
 
-par(mar=c(6,5,1,1))
+#par(mar=c(6,5,1,1))
 plot(x=jitter(rep(1:ncol(total), each=nrow(total))), 
      y=unlist(total), 
      bg=ifelse(z, 'salmon', 'dodgerblue'),
@@ -365,7 +365,7 @@ plot(x=jitter(rep(1:ncol(total), each=nrow(total))),
      ylab='Normalized distance', cex.lab=1.5)
 axis(side=1, at=1:ncol(total), label=colnames(total), las=2)
 
-for (i in seq(2, 13, 2)) {
+for (i in seq(2, 18, 2)) {
   rect(i-.5, -0.2, i+.5, 1.2, border=NA, col=rgb(0,0,1,0.1))
 }
 
