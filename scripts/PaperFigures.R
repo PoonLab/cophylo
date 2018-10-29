@@ -66,7 +66,7 @@ for (i in 1:nmetric) {
 #Figure 3
 require('corrplot')
 
-avg <- read.table('cophylo/data/average.csv', sep='\t', header=T)
+avg <- read.table('cophylo/data/averagefinal.csv', sep='\t', header=T)
 avg$kUn <- 1-avg$kUn
 avg$kU <- 1-avg$kU
 avg$kLn <- 1-avg$kLn
