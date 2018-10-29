@@ -230,28 +230,28 @@ setwd('cophylo')
 total <- read.csv('data/TotalandKernel.txt', header=T, row.names=1)
 
 # exclude "norm" suffix columns
-total <- total[ , !grepl("norm$", names(total))]
+#total <- total[ , !grepl("norm$", names(total))]
 
-concordance <- as.factor(c(
-  'hi',  # 1-2 
-  'hi',  # 3-4
-  'hi',  # 5-6
-  'hi',  # 7-8
-  'hi',  # 9-10
-  'hi',  # 11-12
-  'lo',  # 15-16
-  'lo',  # 17-18
-  'hi',  # 19-20
-  'hi',  # 21-22
-  'lo',  # 23-24
-  'lo',  # 25-26
-  'hi',  # 27-28
-  'lo',  # 29-30
-  'lo',  # 31-32
-  'hi',  # 33-34
-  'hi',  # 35-36
-  'hi'  # 37-38
-))
+#concordance <- as.factor(c(
+ # 'hi',  # 1-2 
+#  'hi',  # 3-4
+#  'hi',  # 5-6
+ # 'hi',  # 7-8
+#  'hi',  # 9-10
+#  'hi',  # 11-12
+#  'lo',  # 15-16
+#  'lo',  # 17-18
+#  'hi',  # 19-20
+ # 'hi',  # 21-22
+ # 'lo',  # 23-24
+ # 'lo',  # 25-26
+ # 'hi',  # 27-28
+ # 'lo',  # 29-30
+ # 'lo',  # 31-32
+ # 'hi',  # 33-34
+ # 'hi',  # 35-36
+ # 'hi'  # 37-38
+#))
 
 # RF dists not normalized in original file
 require(ape)
@@ -273,12 +273,12 @@ total$kUn <- 1 - total$kUn
 total$kL <- 1-total$kL
 total$kLn <- 1-total$kLn
 
-z <- rep(concordance=='hi', times=ncol(total))
+#z <- rep(concordance=='hi', times=ncol(total))
 
 
-fit <- glm((concordance=='hi') ~ kUn+kLn+kU+kL+Sim+Node+nPH85, 
+#fit <- glm((concordance=='hi') ~ kUn+kLn+kU+kL+Sim+Node+nPH85, 
            data=as.data.frame(total), family='binomial')
-summary(fit)
+#summary(fit)
 #p <- princomp(total)
 #biplot(p)
 
@@ -287,7 +287,8 @@ require(e1071)
 temp <- as.data.frame(total)
 
 #biplot(dist(temp[,-14]), temp[,14])
-p <- prcomp(temp[,-14])
+#p <- prcomp(temp[,-14])
+p <- prcomp(temp[1:18])
 #require(devtools)
 #install_github('ggbiplot', 'vqv')
 #require(ggbiplot)
