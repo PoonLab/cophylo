@@ -256,60 +256,34 @@ total <- read.csv('data/TotalandKernel.txt', header=T, row.names=1)
 # RF dists not normalized in original file
 require(ape)
 require(phangorn)
-
 total$RF <- sapply(c(seq(1,12,2), seq(15,38,2)), function(i) {
-  t1 <- read.tree(paste('data/', i, '.nwk', sep=''))
-  t2 <- read.tree(paste('data/', i+1, '.nwk', sep=''))
-  RF.dist(t1, t2, normalize=T, rooted=T, check.labels=F)
+t1 <- read.tree(paste('', i, '.nwk', sep=''))
+t2 <- read.tree(paste('', i+1, '.nwk', sep=''))
+RF.dist(t1, t2, normalize=T, rooted=T, check.labels=F)
 })
-
-# normalize
 normalize <- function(x) {
-  (x-min(x)) / (max(x)-min(x))
+(x-min(x)) / (max(x)-min(x))
 }
 total <- as.data.frame(apply(total, 2, normalize))
 total$kU <- 1-total$kU
 total$kUn <- 1 - total$kUn
 total$kL <- 1-total$kL
 total$kLn <- 1-total$kLn
-
-#z <- rep(concordance=='hi', times=ncol(total))
-
-
-#fit <- glm((concordance=='hi') ~ kUn+kLn+kU+kL+Sim+Node+nPH85, 
-           data=as.data.frame(total), family='binomial')
-#summary(fit)
-#p <- princomp(total)
-#biplot(p)
-
-
-require(e1071)
 temp <- as.data.frame(total)
-
-#biplot(dist(temp[,-14]), temp[,14])
-#p <- prcomp(temp[,-14])
-p <- prcomp(temp[1:18])
-#require(devtools)
-#install_github('ggbiplot', 'vqv')
-#require(ggbiplot)
-require(ggplot2)
-source('coplylo/scripts/ggbiplot.R')
-
-g <- ggbiplot(p, groups=temp$Group, 
-              labels=rownames(temp), labels.size=3, 
-              var.col=rgb(0,0,0,0.4))
+p <- prcomp(temp[1:16])
+g <- ggbiplot(p, groups=temp$Group,
+labels=rownames(temp), labels.size=3,
+var.col=rgb(0,0,0,0.4))
 g <- g + scale_color_manual(name="Group", values=c('firebrick', 'cadetblue'))
 g <- g + theme(legend.position='none')
 print(g)
-
-#points(p$x[,1]/p$sdev[1], p$x[,2]/p$sdev[2])
 
 #Figure S1
 
 setwd('cophylo')
 
 # gives the percentile for 18 pairs in the General data collection
-total <- read.csv('data/TotalandKernelS1.txt', header=T, row.names=1)
+total <- read.csv('data/TotalandKernelS2.txt', header=T, row.names=1)
 
 # exclude "norm" suffix columns
 #total <- total[ , !grepl("norm$", names(total))]
