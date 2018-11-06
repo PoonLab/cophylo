@@ -14,7 +14,7 @@ par(mar=c(5,5,1,0), mfrow=c(1,3), cex=1)
 
 plot(xrange, yrange, type="n", 
      xlab="Coalescence rate (lineage pair/Ma)", ylab="Scaled distance", 
-     log='x', cex.lab=1.2, cex.axis=1.1)
+     log='x', cex.lab=0.7, cex.axis=1.1)
 colors <- rainbow(nmetric, v=0.8)
 for (i in 1:nmetric) {
   m <- levels(df$Metric)[i]
@@ -33,7 +33,7 @@ df <- df[df$M>0,]
 par(mar=c(5,1,1,1))
 plot(range(df$M), range(df$Distance), type="n", 
      xlab="Migration rate (lineage/Ma)", ylab="", 
-     log='x', cex.lab=1.2, cex.axis=1.1, yaxt='n')
+     log='x', cex.lab=0.7, cex.axis=1.1, yaxt='n')
 colors <- rainbow(nmetric, v=0.8)
 for (i in 1:nmetric) {
   m <- levels(df$Metric)[i]
@@ -50,8 +50,8 @@ nmetric <- nlevels(df$Metric)
 df$Distance[grepl("^k", df$Metric)] <- 1 - df$Distance[grepl("^k", df$Metric)]
 
 plot(range(df$P), range(df$Distance), type="n", 
-     xlab="Cospeciation probability", ylab="Scaled distance", 
-     cex.lab=1.2, cex.axis=1.1)
+     xlab="Cospeciation probability", ylab="", 
+     cex.lab=0.7, cex.axis=1.1, yaxt='n')
 colors <- rainbow(nmetric, v=0.8)
 for (i in 1:nmetric) {
   m <- levels(df$Metric)[i]
