@@ -227,7 +227,7 @@ contour(z, add=T, labcex=0.8, vfont=NULL)
 setwd('cophylo')
 
 
-total <- read.csv('data/TotalandKernel.txt', header=T, row.names=1)
+total <- read.csv('data/TotalandKernelfig7.csv', header=T, row.names=1)
 
 # exclude "norm" suffix columns
 #total <- total[ , !grepl("norm$", names(total))]
@@ -283,7 +283,7 @@ print(g)
 setwd('cophylo')
 
 # gives the percentile for 18 pairs in the General data collection
-total <- read.csv('data/TotalandKernelS1.txt', header=T, row.names=1)
+total <- read.csv('data/TotalandKernelS1.csv', header=T, row.names=1)
 
 # exclude "norm" suffix columns
 #total <- total[ , !grepl("norm$", names(total))]
