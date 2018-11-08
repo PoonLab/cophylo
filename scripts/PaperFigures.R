@@ -434,18 +434,18 @@ arrows(-1.53326548,1.34124147,-1.53326548,1.34124147,length=0)
 legend("bottomleft",legend=c('Host','Virus'), pch=c(16,17), pt.cex=2,cex=1,bty='n')
 
 #Figure s4
-df <- read.table("oldaveragecoeffvarL.csv", header=T, sep=',',na.strings = "NA")
+df <- read.table("cophylo/data/oldaveragecoeffvarL.csv", header=T, sep=',',na.strings = "NA")
 nmetric <- nlevels(df$Metric)
 
 
 xrange <- range(df$L)
 yrange <- range(df$Distance,na.rm = TRUE)
 
-par(mar=c(5,5,1,0), mfrow=c(1,3), cex=1)
+par(mar=c(5,4,1,0), mfrow=c(1,3), cex=1)
 
 plot(xrange, yrange, type="n", 
-     xlab="Coalescence rate (lineage pair/Ma)", ylab="Coeffcient of variance", 
-     log='x', cex.lab=0.70, cex.axis=1.1)
+     xlab="Speciation rate (lineage pair/Ma)", ylab="Coeffcient of variance", 
+     log='x', cex.lab=0.80, cex.axis=1.1)
 colors <- rainbow(nmetric, v=0.8)
 for (i in 1:nmetric) {
     m <- levels(df$Metric)[i]
@@ -456,7 +456,7 @@ for (i in 1:nmetric) {
     text(x=metric$L, y=metric$Distance, label=m, cex=0.6, col=colors[i])
 }
 
-df <- read.table("oldaveragecoeffvarM.csv", header=T, sep=',',na.strings = "NA")
+df <- read.table("cophylo/data/oldaveragecoeffvarM.csv", header=T, sep=',',na.strings = "NA")
 nmetric <- nlevels(df$Metric)
 
 # omit M=0
@@ -464,7 +464,7 @@ df <- df[df$M>0,]
 par(mar=c(5,1,1,1))
 plot(range(df$M), range(df$Distance,na.rm = TRUE), type="n", 
      xlab="Migration rate (lineage/Ma)", ylab="", 
-     log='x', cex.lab=0.70, cex.axis=1.1, yaxt='n')
+     log='x', cex.lab=1, cex.axis=1.1, yaxt='n')
 colors <- rainbow(nmetric, v=0.8)
 for (i in 1:nmetric) {
     m <- levels(df$Metric)[i]
@@ -475,13 +475,13 @@ for (i in 1:nmetric) {
     text(x=metric$M, y=metric$Distance, label=m, cex=0.6, col=colors[i])
 }
 
-df <- read.table("oldaveragecoeffvarP.csv", header=T, sep=',',na.strings = "NA")
+df <- read.table("cophylo/data/oldaveragecoeffvarP.csv", header=T, sep=',',na.strings = "NA")
 nmetric <- nlevels(df$Metric)
 
 
 plot(range(df$P), range(df$Distance,na.rm = TRUE), type="n", 
      xlab="Cospeciation probability", ylab="Coeffcient of variance", 
-     cex.lab=0.70, cex.axis=1.1)
+     cex.lab=1, cex.axis=1.1)
 colors <- rainbow(nmetric, v=0.8)
 for (i in 1:nmetric) {
     m <- levels(df$Metric)[i]
