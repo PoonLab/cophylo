@@ -10,19 +10,19 @@ df$Distance[grepl("^k", df$Metric)] <- 1 - df$Distance[grepl("^k", df$Metric)]
 xrange <- range(df$L)
 yrange <- range(df$Distance)
 
-par(mar=c(5,5,1,0), mfrow=c(1,3), cex=1)
+par(mar=c(5,4,1,0), mfrow=c(1,3), cex=1)
 
 plot(xrange, yrange, type="n", 
-     xlab="Coalescence rate (lineage pair/Ma)", ylab="Scaled distance", 
-     log='x', cex.lab=0.7, cex.axis=1.1)
+     xlab="Speciation rate (lineage pair/Ma)", ylab="Scaled distance", 
+     log='x', cex.lab=0.85, cex.axis=1.1)
 colors <- rainbow(nmetric, v=0.8)
 for (i in 1:nmetric) {
-  m <- levels(df$Metric)[i]
-  metric <- subset(df, Metric==m)
-  lines(metric$L, metric$Distance, type="l", lwd=1.5,
-        col=colors[i])
-  points(metric$L, metric$Distance, col='white', cex=2, pch=20)
-  text(x=metric$L, y=metric$Distance, label=m, cex=0.6, col=colors[i])
+    m <- levels(df$Metric)[i]
+    metric <- subset(df, Metric==m)
+    lines(metric$L, metric$Distance, type="l", lwd=1.5,
+          col=colors[i])
+    points(metric$L, metric$Distance, col='white', cex=2, pch=20)
+    text(x=metric$L, y=metric$Distance, label=m, cex=0.6, col=colors[i])
 }
 
 df <- read.table("oldaverageforRscaledM.csv", header=T, sep=',')
@@ -33,15 +33,15 @@ df <- df[df$M>0,]
 par(mar=c(5,1,1,1))
 plot(range(df$M), range(df$Distance), type="n", 
      xlab="Migration rate (lineage/Ma)", ylab="", 
-     log='x', cex.lab=0.7, cex.axis=1.1, yaxt='n')
+     log='x', cex.lab=1, cex.axis=1.1, yaxt='n')
 colors <- rainbow(nmetric, v=0.8)
 for (i in 1:nmetric) {
-  m <- levels(df$Metric)[i]
-  metric <- subset(df, Metric==m)
-  lines(metric$M, metric$Distance, type="l", lwd=1.5,
-        col=colors[i])
-  points(metric$M, metric$Distance, col='white', cex=2, pch=20)
-  text(x=metric$M, y=metric$Distance, label=m, cex=0.6, col=colors[i])
+    m <- levels(df$Metric)[i]
+    metric <- subset(df, Metric==m)
+    lines(metric$M, metric$Distance, type="l", lwd=1.5,
+          col=colors[i])
+    points(metric$M, metric$Distance, col='white', cex=2, pch=20)
+    text(x=metric$M, y=metric$Distance, label=m, cex=0.6, col=colors[i])
 }
 
 
@@ -51,15 +51,15 @@ df$Distance[grepl("^k", df$Metric)] <- 1 - df$Distance[grepl("^k", df$Metric)]
 
 plot(range(df$P), range(df$Distance), type="n", 
      xlab="Cospeciation probability", ylab="", 
-     cex.lab=0.7, cex.axis=1.1, yaxt='n')
+     cex.lab=1, cex.axis=1.1, yaxt='n')
 colors <- rainbow(nmetric, v=0.8)
 for (i in 1:nmetric) {
-  m <- levels(df$Metric)[i]
-  metric <- subset(df, Metric==m)
-  lines(metric$P, metric$Distance, type="l", lwd=1.5,
-        col=colors[i])
-  points(metric$P, metric$Distance, col='white', cex=2, pch=20)
-  text(x=metric$P, y=metric$Distance, label=m, cex=0.6, col=colors[i])
+    m <- levels(df$Metric)[i]
+    metric <- subset(df, Metric==m)
+    lines(metric$P, metric$Distance, type="l", lwd=1.5,
+          col=colors[i])
+    points(metric$P, metric$Distance, col='white', cex=2, pch=20)
+    text(x=metric$P, y=metric$Distance, label=m, cex=0.6, col=colors[i])
 }
 #file saved in pdf as cophylo/data/edgecases.pdf, modified in Adobe Illustrator as cophylo/data/edgecases-ai.pdf and redited in GIMP Image Editor as cophylo/data/edgecases-ai_modified.png
 
