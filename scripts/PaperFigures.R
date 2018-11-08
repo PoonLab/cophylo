@@ -481,7 +481,7 @@ nmetric <- nlevels(df$Metric)
 
 plot(range(df$P), range(df$Distance,na.rm = TRUE), type="n", 
      xlab="Cospeciation probability", ylab="Coeffcient of variance", 
-     cex.lab=1, cex.axis=1.1)
+     cex.lab=1, cex.axis=1.1, yaxt='n')
 colors <- rainbow(nmetric, v=0.8)
 for (i in 1:nmetric) {
     m <- levels(df$Metric)[i]
