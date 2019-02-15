@@ -89,7 +89,7 @@ corrplot(corr, type='lower', diag=F, method='ellipse', order='FPC', cl.pos='n', 
 finalforL <- read.csv('cophylo/data/FinalforL.csv', sep=',', header=T)
 finalforM <- read.csv('cophylo/data/FinalforM.csv', sep=',', header=T)
 finalforP <- read.csv('cophylo/data/FinalforP.csv', sep=',', header=T)
-
+finalforM$MP=log(finalforM$MP)
 require(entropy)
 
 # example
