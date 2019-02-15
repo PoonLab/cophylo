@@ -86,31 +86,33 @@ corrplot(corr, type='lower', diag=F, method='ellipse', order='FPC', cl.pos='n', 
 
 #Figure 4 
 
-final <- read.csv('cophylo/data/Final.csv', sep=',', header=T)
+finalforL <- read.csv('cophylo/data/FinalforL.csv', sep=',', header=T)
+finalforM <- read.csv('cophylo/data/FinalforM.csv', sep=',', header=T)
+finalforP <- read.csv('cophylo/data/FinalforP.csv', sep=',', header=T)
 
 require(entropy)
 
 # example
-d2d <- discretize2d(final$P, final$kUn, numBins1=10, numBins2=10)
+d2d <- discretize2d(finalforL$P, final$kUn, numBins1=10, numBins2=10)
 plot(d2d)
 mi.empirical(d2d)
 entropy.empirical(final$kUn)
 
 # generate data frame
-temp <- sapply(4:ncol(final), function(i) {
-  d2d <- discretize2d(log(final$L), final[,i], numBins1=10,
+temp <- sapply(4:ncol(finalforL), function(i) {
+  d2d <- discretize2d(log(finalforL$L), finalforL[,i], numBins1=10,
                       numBins2=10)
   mi.empirical(d2d)
 })
-mi <- data.frame(metric=names(final)[4:ncol(final)], L=temp)
+mi <- data.frame(metric=names(finalforL)[4:ncol(finalforL)], L=temp)
 
-mi$M <- sapply(4:ncol(final), function(i) {
-  d2d <- discretize2d(log(final$M), final[,i], numBins1=10,
+mi$M <- sapply(4:ncol(finalforM), function(i) {
+  d2d <- discretize2d(log(finalforM$M), finalforM[,i], numBins1=10,
                       numBins2=10)
   mi.empirical(d2d)
 })
-mi$P <- sapply(4:ncol(final), function(i) {
-  d2d <- discretize2d(final$P, final[,i], numBins1=10, numBins2=10)
+mi$P <- sapply(4:ncol(finalforP), function(i) {
+  d2d <- discretize2d(finalforP$P, finalforP[,i], numBins1=10, numBins2=10)
   mi.empirical(d2d)
 })
 
@@ -122,17 +124,18 @@ par(mar=c(5,5,1,1))
 barplot(t(mi[,2:4]), beside=T, names.arg=mi$metric, 
         las=2, col=pal, ylab='Mutual information')
 
-temp <- final[final$P>0.8,]
+temp <- finalforM[finalforM$P>0.8,]
 mi$M2 <- sapply(4:ncol(temp), function(i) {
   d2d <- discretize2d(log(temp$M), temp[,i], numBins1=10, numBins2=10)
   mi.empirical(d2d)
 })
 
-temp <- final[final$M < 1e-4,]
+temp <- finalforL[finalforL$M < 1e-4,]
 mi$L2 <- sapply(4:ncol(temp), function(i) {
   d2d <- discretize2d(log(temp$L), temp[,i], numBins1=10, numBins2=10)
   mi.empirical(d2d)
 })
+temp <- finalforP[finalforP$M < 1e-4,]
 mi$P2 <- sapply(4:ncol(temp), function(i) {
   d2d <- discretize2d(temp$P, temp[,i], numBins1=10, numBins2=10)
   mi.empirical(d2d)
