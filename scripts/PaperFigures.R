@@ -267,14 +267,14 @@ RF.dist(t1, t2, normalize=T, rooted=T, check.labels=F)
 normalize <- function(x) {
 (x-min(x)) / (max(x)-min(x))
 }
-total <- as.data.frame(apply(total, 2, normalize))
-total$kU <- 1-total$kU
-total$kUn <- 1 - total$kUn
-total$kL <- 1-total$kL
-total$kLn <- 1-total$kLn
-temp <- as.data.frame(total)
-p <- prcomp(temp[1:16])
-g <- ggbiplot(p, groups=temp$Group,
+ntotal <- as.data.frame(apply(total[1:16], 2, normalize))
+ntotal$kU <- 1-ntotal$kU
+ntotal$kUn <- 1 - ntotal$kUn
+ntotal$kL <- 1-ntotal$kL
+ntotal$kLn <- 1-ntotal$kLn
+temp <- as.data.frame(ntotal)
+p <- prcomp(temp)
+g <- ggbiplot(p, groups=total$Group,
 labels=rownames(temp), labels.size=3,
 var.col=rgb(0,0,0,0.4))
 g <- g + scale_color_manual(name="Group", values=c('firebrick', 'cadetblue'))
